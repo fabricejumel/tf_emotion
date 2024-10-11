@@ -109,13 +109,16 @@ def detect(opt):
                 #for *xyxy, conf, cls in reversed(det):
                 #for *xyxy, conf, cls in det[::-1]:
                 for *xyxy, conf, cls in reversed(det):
-                    if view_img or not nosave:  
-                        # Add bbox to image with emotions on 
-                        label = emotions[i][0]
-                        colour = colors[emotions[i][1]]
+                    if view_img or not nosave:
+                        if i < len(emotions):
+                            # Add bbox to image with emotions on 
+                            label = emotions[i][0]
+                            colour = colors[emotions[i][1]]
+                            plot_one_box(xyxy, im0, label=label, color=colour, line_thickness=opt.line_thickness)
+                        else:
+                            print(f"Warning: No emotion available for bounding box {i}. Skipping emotion labeling.")
+                       
                         i += 1
-                        plot_one_box(xyxy, im0, label=label, color=colour, line_thickness=opt.line_thickness)
-
 
             # Stream results
             if view_img:
